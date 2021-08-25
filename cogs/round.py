@@ -23,10 +23,14 @@ from constants import AUTO_UPDATE_TIME, ADMIN_PRIVILEGE_ROLES
 MAX_ROUND_USERS = 5
 LOWER_RATING = 800
 UPPER_RATING = 3600
-MATCH_DURATION = [5, 180]
-MAX_PROBLEMS = 6
 MAX_ALTS = 5
 ROUNDS_PER_PAGE = 5
+
+NUM_DURATION = 1
+NUM_PROBLEM = 6
+RATING_LIST = [1200, 1400, 1600, 1700, 1800, 1900]
+POINTS_LIST = [101, 202, 304, 408, 516, 632]
+REPEAT_BOOL = 0
 
 
 class Round(commands.Cog):
@@ -141,82 +145,11 @@ class Round(commands.Cog):
             )
             return
 
-        problem_cnt = await discord_.get_time_response(
-            self.client,
-            ctx,
-            f"{ctx.author.mention} enter the number of problems between [1, {MAX_PROBLEMS}]",
-            30,
-            ctx.author,
-            [1, MAX_PROBLEMS],
-        )
-        if not problem_cnt[0]:
-            await discord_.send_message(
-                ctx, f"{ctx.author.mention} you took too long to decide"
-            )
-            return
-        problem_cnt = problem_cnt[1]
-
-        duration = await discord_.get_time_response(
-            self.client,
-            ctx,
-            f"{ctx.author.mention} enter the duration of match in minutes between {MATCH_DURATION}",
-            30,
-            ctx.author,
-            MATCH_DURATION,
-        )
-        if not duration[0]:
-            await discord_.send_message(
-                ctx, f"{ctx.author.mention} you took too long to decide"
-            )
-            return
-        duration = duration[1]
-
-        rating = await discord_.get_seq_response(
-            self.client,
-            ctx,
-            f"{ctx.author.mention} enter {problem_cnt} space seperated integers denoting the ratings of problems (between {LOWER_RATING} and {UPPER_RATING})",
-            60,
-            problem_cnt,
-            ctx.author,
-            [LOWER_RATING, UPPER_RATING],
-        )
-        if not rating[0]:
-            await discord_.send_message(
-                ctx, f"{ctx.author.mention} you took too long to decide"
-            )
-            return
-        rating = rating[1]
-
-        points = await discord_.get_seq_response(
-            self.client,
-            ctx,
-            f"{ctx.author.mention} enter {problem_cnt} space seperated integer denoting the points of problems (between 100 and 10,000)",
-            60,
-            problem_cnt,
-            ctx.author,
-            [100, 10000],
-        )
-        if not points[0]:
-            await discord_.send_message(
-                ctx, f"{ctx.author.mention} you took too long to decide"
-            )
-            return
-        points = points[1]
-
-        repeat = await discord_.get_time_response(
-            self.client,
-            ctx,
-            f"{ctx.author.mention} do you want a new problem to appear when someone solves a problem (type 1 for yes and 0 for no)",
-            30,
-            ctx.author,
-            [0, 1],
-        )
-        if not repeat[0]:
-            await discord_.send_message(
-                ctx, f"{ctx.author.mention} you took too long to decide"
-            )
-            return
-        repeat = repeat[1]
+        problem_cnt = NUM_PROBLEM
+        duration = NUM_DURATION
+        rating = RATING_LIST
+        points = POINTS_LIST
+        repeat = REPEAT_BOOL
 
         for i in users:
             if self.db.in_a_round(ctx.guild.id, i.id):

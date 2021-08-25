@@ -200,6 +200,11 @@ async def update_rounds(client):
                 embed.set_author(name=f"Round over! Final standings")
                 await channel.send(embed=embed)
 
+                updates_channel = await client.fetch_channel(
+                    os.environ.get("UPDATES_CHANNEL")
+                )
+                await updates_channel.send(embed=embed)
+
                 if round_info.tournament == 1:
                     tournament_info = db.get_tournament_info(round_info.guild)
                     if not tournament_info or tournament_info.status != 2:
