@@ -61,7 +61,9 @@ class ELOMatch:
                         S = 0.0
 
                     # work out EA
-                    EA = 1 / (1.0 + math.pow(10.0, (opponentELO - curELO) / 400.0))
+                    EA = 1 / (
+                        1.0 + math.pow(10.0, (opponentELO - curELO) / 400.0)
+                    )
 
                     # calculate ELO change vs this one opponent, add it to our change bucket
                     # I currently round at this point, this keeps rounding changes symetrical between EA and EB, but changes K more than it should
@@ -69,7 +71,9 @@ class ELOMatch:
 
                     # add accumulated change to initial ELO for final ELO
 
-            self.players[i].eloPost = self.players[i].eloPre + self.players[i].eloChange
+            self.players[i].eloPost = (
+                self.players[i].eloPre + self.players[i].eloChange
+            )
 
 
 # ranklist = [[DiscordUser, rank, elo]]
@@ -80,6 +84,8 @@ def calculateChanges(ranklist):
     ELO.calculateELOs()
     res = {}
     for player in ranklist:
-        res[player[0].id] = [ELO.getELO(player[0].id), ELO.getELOChange(player[0].id)]
+        res[player[0].id] = [
+            ELO.getELO(player[0].id),
+            ELO.getELOChange(player[0].id),
+        ]
     return res
-
