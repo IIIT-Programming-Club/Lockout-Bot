@@ -253,5 +253,4 @@ backup
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm
 
 # Docker
-Dockerfile
 docker-compose.yml
