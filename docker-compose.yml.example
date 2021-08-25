@@ -29,6 +29,7 @@ services:
     environment:
       LOCKOUT_BOT_TOKEN: ""
       LOGGING_CHANNEL: ""
+      UPDATES_CHANNEL: ""
       DB_HOST: ""
       DB_NAME: ""
       DB_USERNAME: ""
